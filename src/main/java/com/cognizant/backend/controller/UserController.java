@@ -1,5 +1,6 @@
 package com.cognizant.backend.controller;
 
+import com.cognizant.backend.model.User;
 import com.cognizant.backend.payload.ApiResponse;
 import com.cognizant.backend.payload.UserDto;
 import com.cognizant.backend.service.UserService;
@@ -51,7 +52,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<UserDto> getUser(@PathVariable Long userId){
+    public ResponseEntity<User> getUser(@PathVariable Long userId){
         return ResponseEntity.ok(this.userService.getUserById(userId));
     }
 }

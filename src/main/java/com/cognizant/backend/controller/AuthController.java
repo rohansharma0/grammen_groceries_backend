@@ -2,6 +2,7 @@ package com.cognizant.backend.controller;
 
 import com.cognizant.backend.BackendApplication;
 import com.cognizant.backend.exception.ApiException;
+import com.cognizant.backend.model.User;
 import com.cognizant.backend.payload.JwtAuthRequest;
 import com.cognizant.backend.payload.JwtAuthResponse;
 import com.cognizant.backend.payload.UserDto;
@@ -21,7 +22,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/auth/")
-@CrossOrigin(methods = RequestMethod.GET)
+@CrossOrigin(methods = RequestMethod.POST)
 public class AuthController {
 
     @Autowired
@@ -49,15 +50,16 @@ public class AuthController {
 
         JwtAuthResponse response = new JwtAuthResponse();
         response.setToken(token);
+        response.setUser(userDetails);
 
         return new ResponseEntity<>(response , HttpStatus.OK);
     }
 
     //post - register new user
     @PostMapping("/register")
-    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto userDto){
-        UserDto createUserDto = this.userService.registerUser(userDto);
-        return new ResponseEntity<>(createUserDto , HttpStatus.CREATED);
+    public ResponseEntity<User> registerUser(@Valid @RequestBody UserDto userDto){
+        User createUser = this.userService.registerUser(userDto);
+        return new ResponseEntity<>(createUser , HttpStatus.CREATED);
     }
 
     private void authenticate(String username, String password) throws Exception {

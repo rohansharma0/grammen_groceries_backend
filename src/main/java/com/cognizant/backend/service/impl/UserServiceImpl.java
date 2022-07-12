@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDto registerUser(UserDto userDto) {
+    public User registerUser(UserDto userDto) {
         User user = this.dtoToUser(userDto);
         //encode the password
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
         User savedUser = this.userRepository.save(user);
 
-        return this.userToDto(savedUser);
+        return savedUser;
     }
 
     @Override
@@ -70,9 +70,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserById(long userId) {
+    public User getUserById(long userId) {
         User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User" , "id" , userId));
-        return this.userToDto(user);
+        return user;
     }
 
     @Override
